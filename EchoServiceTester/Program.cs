@@ -8,6 +8,7 @@ using System.ServiceModel.Channels;
 using System.IO;
 using System.ServiceModel.Description;
 using System.ServiceModel.Security;
+using System.Net;
 
 namespace EchoServiceTester
 {
@@ -19,12 +20,14 @@ namespace EchoServiceTester
         }
         private static void RunTests()
         {
-            string address = string.Format("http://localhost:80/IISHost/EchoService/HelloWorld.svc");
-            BasicHttpBinding binding = new BasicHttpBinding();
-            binding.Security.Mode = BasicHttpSecurityMode.TransportCredentialOnly;
-            binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic;
+            string securityAddress = string.Format("https://localhost:443/IISHost/EchoService/HelloWorld.svc/safe");
+            string address = string.Format("http://localhost:80/IISHost/EchoService/HelloWorld.svc/safe");
+            WSHttpBinding binding = new WSHttpBinding(SecurityMode.TransportWithMessageCredential);
 
-            InvokeServiceOperations(address, binding);
+            binding.Security.Message.ClientCredentialType = MessageCredentialType.UserName;
+
+            InvokeServiceOperations(securityAddress, binding);
+
         }
 
         private static void InvokeServiceOperations(string address, Binding binding)
@@ -49,14 +52,14 @@ namespace EchoServiceTester
 
         static void TestEcho(string address, Binding binding)
         {
-            ChannelFactory<IEcho> channelFactory = new ChannelFactory<IEcho>(binding, address);
+            ChannelFactory<IHelloWorld> channelFactory = new ChannelFactory<IHelloWorld>(binding, address);
+            ServicePointManager.ServerCertificateValidationCallback = (snder, cert, chain, error) => true;
             channelFactory.Credentials.UserName.UserName = "h";
             channelFactory.Credentials.UserName.Password = "p";
-
-            IEcho client = channelFactory.CreateChannel();
+            IHelloWorld client = channelFactory.CreateChannel();
             ((IChannel)client).Open();
 
-            Console.WriteLine("Invoking Echo... Response = {0}", client.Echo("Hello World!"));
+            Console.WriteLine("Invoking Echo... Response = {0}", client.SayHello("zhiqiang"));
             ((IChannel)client).Close();
         }
 
@@ -69,8 +72,11 @@ namespace EchoServiceTester
 
             MemoryStream stream = new MemoryStream(buffer);
 
-            ChannelFactory<IEcho> channelFactory = new ChannelFactory<IEcho>(binding, address);
-            IEcho client = channelFactory.CreateChannel();
+            ChannelFactory<IHelloWorld> channelFactory = new ChannelFactory<IHelloWorld>(binding, address);
+            ServicePointManager.ServerCertificateValidationCallback = (snder, cert, chain, error) => true;
+            channelFactory.Credentials.UserName.UserName = "h";
+            channelFactory.Credentials.UserName.Password = "p";
+            IHelloWorld client = channelFactory.CreateChannel();
             ((IChannel)client).Open();
 
             Console.WriteLine("Invoking UploadStream...");
@@ -81,8 +87,11 @@ namespace EchoServiceTester
 
         static void TestDownloadStream(string address, Binding binding)
         {
-            ChannelFactory<IEcho> channelFactory = new ChannelFactory<IEcho>(binding, address);
-            IEcho client = channelFactory.CreateChannel();
+            ChannelFactory<IHelloWorld> channelFactory = new ChannelFactory<IHelloWorld>(binding, address);
+            ServicePointManager.ServerCertificateValidationCallback = (snder, cert, chain, error) => true;
+            channelFactory.Credentials.UserName.UserName = "h";
+            channelFactory.Credentials.UserName.Password = "p";
+            IHelloWorld client = channelFactory.CreateChannel();
             ((IChannel)client).Open();
 
             Console.WriteLine("Invoking DownloadStream...");
@@ -106,10 +115,10 @@ namespace EchoServiceTester
         }
 
         [ServiceContract]
-        public interface IEcho
+        public interface IHelloWorld
         {
             [OperationContract]
-            string Echo(string message);
+            string SayHello(string name);
 
             [OperationContract]
             Stream DownloadStream();

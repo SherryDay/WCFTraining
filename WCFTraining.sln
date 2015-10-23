@@ -24,8 +24,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DuplexServiceHosting", "DuplexServiceHosting\DuplexServiceHosting.csproj", "{C3054265-EAFF-4CF1-8676-598002F70B03}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoServiceTester", "EchoServiceTester\EchoServiceTester.csproj", "{5DC40587-66E8-451D-B8B5-6E053029E78E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8336DB3D-F90B-4792-BC12-981F90286B29} = {8336DB3D-F90B-4792-BC12-981F90286B29}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IISHost", "..\..\Documents\Visual Studio 2015\Projects\WCF\IISHost\IISHost.csproj", "{8336DB3D-F90B-4792-BC12-981F90286B29}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IISHost", "IISHost\IISHost.csproj", "{8336DB3D-F90B-4792-BC12-981F90286B29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
