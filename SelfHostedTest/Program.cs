@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
 using System.ServiceModel.Description;
+using System.ServiceModel.Security;
 
 namespace SelfHostedTest
 {
@@ -19,7 +20,12 @@ namespace SelfHostedTest
             ServiceHost host = new ServiceHost(typeof(SelfHostService.HelloWorldService), httpUrl);
 
             BasicHttpBinding binding = new BasicHttpBinding();
-            host.AddServiceEndpoint(typeof(SelfHostService.IHelloWorldService), new BasicHttpBinding(), address);
+            binding.Security.Mode = BasicHttpSecurityMode.TransportCredentialOnly;
+            binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic;
+
+            host.AddServiceEndpoint(typeof(SelfHostService.IHelloWorldService), binding, address);
+            host.Credentials.UserNameAuthentication.UserNamePasswordValidationMode = UserNamePasswordValidationMode.Custom;
+            host.Credentials.UserNameAuthentication.CustomUserNamePasswordValidator = new MyCustomValidator();
 
             ServiceMetadataBehavior smb = new ServiceMetadataBehavior();
             smb.HttpGetEnabled = true;

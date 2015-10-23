@@ -10,10 +10,14 @@ namespace TestClient
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Client is running at " + DateTime.Now.ToString());
-            Console.WriteLine("Sum of two numbers... 5+5 =" + SelfHostService.GetMessage("Zhiqiang"));
-            Console.ReadLine();
+            HelloWorldService.HelloWorldServiceClient client = new HelloWorldService.HelloWorldServiceClient();
+            client.ClientCredentials.UserName.UserName = "h";
+            client.ClientCredentials.UserName.Password = "p";
+            Console.WriteLine("result =" + client.GetMessage("zhiqiang1"));
 
+            Console.WriteLine("Client is running at " + DateTime.Now.ToString());
+            Console.WriteLine("result =" + SelfHostServiceProxy.GetMessage("Zhiqiang"));
+            Console.ReadLine();
         }
     }
 }
