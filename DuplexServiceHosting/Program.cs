@@ -11,7 +11,7 @@ namespace DuplexServiceHosting
     {
         static void Main(string[] args)
         {
-            using (ServiceHost host = new ServiceHost(typeof(DuplexStreamingService.DuplexService)))
+            using (ServiceHost host = new ServiceHost(typeof(IISHost.DuplexStreamingService.DuplexService)))
             {
                 host.Open();
                 Console.WriteLine("DuplexService is running......");

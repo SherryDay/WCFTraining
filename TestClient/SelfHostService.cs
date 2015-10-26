@@ -22,7 +22,7 @@ namespace TestClient
 
             factory.Credentials.UserName.UserName = "h";
             factory.Credentials.UserName.Password = "p";
-
+     
             HelloWorldService.IHelloWorldService proxy = factory.CreateChannel();
 
             string result = proxy.GetMessage(name);

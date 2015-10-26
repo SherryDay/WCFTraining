@@ -55,6 +55,10 @@
       <Project>{9b6e696b-33aa-4ee6-99ef-6288b41b450e}</Project>
       <Name>DuplexStreamingService</Name>
     </ProjectReference>
+    <ProjectReference Include="..\IISHost\IISHost.csproj">
+      <Project>{8336db3d-f90b-4792-bc12-981f90286b29}</Project>
+      <Name>IISHost</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

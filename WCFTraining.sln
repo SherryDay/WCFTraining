@@ -30,6 +30,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EchoServiceTester", "EchoSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IISHost", "IISHost\IISHost.csproj", "{8336DB3D-F90B-4792-BC12-981F90286B29}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BroadcastorClient", "BroadcastorClient\BroadcastorClient.csproj", "{06590196-55B1-4984-AC57-8D4419BEC2CE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8336DB3D-F90B-4792-BC12-981F90286B29} = {8336DB3D-F90B-4792-BC12-981F90286B29}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,6 +77,10 @@ Global
 		{8336DB3D-F90B-4792-BC12-981F90286B29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8336DB3D-F90B-4792-BC12-981F90286B29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8336DB3D-F90B-4792-BC12-981F90286B29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06590196-55B1-4984-AC57-8D4419BEC2CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06590196-55B1-4984-AC57-8D4419BEC2CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06590196-55B1-4984-AC57-8D4419BEC2CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06590196-55B1-4984-AC57-8D4419BEC2CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -86,5 +95,6 @@ Global
 		{C3054265-EAFF-4CF1-8676-598002F70B03} = {182B961C-9C02-4913-975E-344ADA1F26A5}
 		{5DC40587-66E8-451D-B8B5-6E053029E78E} = {2FDFAF43-6D79-493D-90C2-9420906CE3D8}
 		{8336DB3D-F90B-4792-BC12-981F90286B29} = {7AB8387D-DEA6-461F-A85A-BB142BB22A03}
+		{06590196-55B1-4984-AC57-8D4419BEC2CE} = {2FDFAF43-6D79-493D-90C2-9420906CE3D8}
 	EndGlobalSection
 EndGlobal
