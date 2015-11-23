@@ -20,6 +20,8 @@ namespace SelfHostedTest
             ServiceHost host = new ServiceHost(typeof(SelfHostService.HelloWorldService), httpUrl);
 
             BasicHttpBinding binding = new BasicHttpBinding();
+
+            //binding security configuration
             binding.Security.Mode = BasicHttpSecurityMode.TransportCredentialOnly;
             binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic;
 
@@ -32,9 +34,12 @@ namespace SelfHostedTest
             host.Description.Behaviors.Add(smb);
 
             host.Open();
+            Console.WriteLine("Host description : " + host.Description);
             Console.WriteLine("Service is host at " + address);
             Console.WriteLine("Host is running... Press <Enter> key to stop");
             Console.ReadLine();
+
+            
         }
     }
 }
