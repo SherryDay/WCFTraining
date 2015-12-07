@@ -11,7 +11,7 @@ namespace TestClient
     {
         public static string GetMessage(string name)
         {
-            string baseAddress = "http://localhost:8090/SelfHostService/HelloWorldSerivce";
+            string baseAddress = "http://localhost:8091/SelfHostService/HelloWorldSerivce";
             BasicHttpBinding binding = new BasicHttpBinding();
             binding.Security.Mode = BasicHttpSecurityMode.TransportCredentialOnly;
             binding.Security.Transport.ClientCredentialType = HttpClientCredentialType.Basic;

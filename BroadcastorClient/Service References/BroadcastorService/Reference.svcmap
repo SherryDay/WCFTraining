@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="33e69729-2d42-44ac-9496-28b39274b479" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost/IISHost/BroadcastorService/BroadcastorService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="BroadcastorService.xsd" MetadataType="Schema" ID="474ce1ac-06fe-4c03-abe6-6cfd521e00aa" SourceId="1" SourceUrl="http://v-zhidu01.fareast.corp.microsoft.com/IISHost/BroadcastorService/BroadcastorService.svc?xsd=xsd1" />
+    <MetadataFile FileName="BroadcastorService1.xsd" MetadataType="Schema" ID="1518aeef-c684-4f99-8383-1a14811812c5" SourceId="1" SourceUrl="http://v-zhidu01.fareast.corp.microsoft.com/IISHost/BroadcastorService/BroadcastorService.svc?xsd=xsd2" />
+    <MetadataFile FileName="BroadcastorService.wsdl" MetadataType="Wsdl" ID="82182675-72f3-49e0-bec4-1277a794c94f" SourceId="1" SourceUrl="http://v-zhidu01.fareast.corp.microsoft.com/IISHost/BroadcastorService/BroadcastorService.svc?wsdl" />
+    <MetadataFile FileName="BroadcastorService.disco" MetadataType="Disco" ID="17815ade-b5f7-4b48-a8f1-0c6baf913bb6" SourceId="1" SourceUrl="http://v-zhidu01.fareast.corp.microsoft.com/IISHost/BroadcastorService/BroadcastorService.svc?disco" />
+    <MetadataFile FileName="BroadcastorService2.xsd" MetadataType="Schema" ID="ffa0ae63-cc89-4226-b7b0-86d10ee8c8d5" SourceId="1" SourceUrl="http://v-zhidu01.fareast.corp.microsoft.com/IISHost/BroadcastorService/BroadcastorService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

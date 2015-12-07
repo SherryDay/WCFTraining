@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.ServiceModel.Security;
+using System.ServiceModel.Configuration;
 
 namespace SelfHostedTest
 {
     class Program
     {
         static void Main(string[] args)
-        { 
+        {
             string address = "http://localhost:8090/SelfHostService/HelloWorldSerivce";
 
             Uri httpUrl = new Uri(address);
@@ -38,8 +39,6 @@ namespace SelfHostedTest
             Console.WriteLine("Service is host at " + address);
             Console.WriteLine("Host is running... Press <Enter> key to stop");
             Console.ReadLine();
-
-            
         }
     }
 }

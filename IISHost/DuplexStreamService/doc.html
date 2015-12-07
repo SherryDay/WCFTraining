@@ -1,0 +1,183 @@
+﻿
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Article Source</title>
+    <link rel="stylesheet" type="text/css"
+          href="//codeproject.cachefly.net/App_Themes/CodeProject/Css/Main.css?dt=2.8.151024.1" />
+    <base href="http://www.codeproject.com/KB/WCF/" />
+</head>
+<body>
+    <!--
+    HTML for article "Implement A Duplex Service Using WCF --- Beginner's Tutorial For WCF" by Damon Du
+    URL: http://www.codeproject.com/KB/WCF/1043318.aspx
+    Copyright 2015 by Damon Du
+    All formatting, additions and alterations Copyright © CodeProject, 1999-2015
+    -->
+
+
+
+    <p>
+        <b>
+            Please choose 'View Source' in your browser to view the HTML, or File | Save to save this
+            file to your hard drive for editing.
+        </b>
+    </p>
+
+    <hr class="Divider subdue" />
+    <div>
+
+
+
+
+        <!-- Start Article -->
+        <span id="ArticleContent">
+
+
+            <h2>&nbsp;</h2>
+
+            <h2>Introduction</h2>
+
+            <p>At the beginning of this article, let&#39;s talk about the messaging transfer mode in WCF.</p>
+
+            <h2>Messaging TransferMode</h2>
+
+            <ul>
+                <li><strong>&nbsp;Request-Reply​ - </strong>By default, all WCF will operated in Request-Reply mode. It means that, when client make a request to the WCF service and client will wait to get response from service (<em>till receive Timeout, defaultl value is 1 minute, you can change it By <strong>ReceicedTimeOut </strong>object</em>). If service doesn&#39;t responed to the service within received timeout, Client will receive <em>TimeOutException.</em></li>
+            </ul>
+
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img alt="Request-Reply" src="http://wcftutorial.net/Images/140100_Request-Reply-operation.jpg" style="width: 565px; height: 173px; margin-right: 200px; margin-left: 200px; float: left;" /></p>
+
+            <h2>&nbsp;</h2>
+
+            <h2>&nbsp;</h2>
+
+            <p>&nbsp;</p>
+
+            <ul>
+                <li><strong>​One-Way - </strong>In One-Way transfer mode, client will send a request to the server and does not care whether it is success or failure of&nbsp;service execution. These is no return from the server side, it is one-way commucation. Client will be blocked only for a moment till it dispatches its call to service. If any exception thrown by service will not reach the client.</li>
+            </ul>
+
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;​&nbsp;&nbsp;&nbsp;&nbsp; Client will continue to execute its statement, after making one-way call to server. There is no need to wait, till server execute. But sometime when one-way calls reach the service, they may not be dispatched one at a time, according to the service&#39;s configured <strong>concurrency </strong>mode behavior. If the number of queued messages has excessed the queue&#39;s capacity, the client will be blocked even if it&#39;s issued a one-way call.</p>
+
+            <p>&nbsp;<img alt="" src="http://wcftutorial.net/Images/140200_One-way-Operation.jpg" style="width: 565px; height: 173px; margin-right: 200px; margin-left: 200px;" /></p>
+
+            <div>&nbsp;One-Way operation can be enabled by setting <em>IsOneWay </em>property to true in Operation cantract attribute.</div>
+
+<pre lang="cs">
+​[ServiceContract]
+public interface IMyService
+{
+&nbsp;&nbsp;&nbsp; [OperationContract(IsOneWay=true)]
+&nbsp;&nbsp;&nbsp; void MyMethod(string parameter);
+}</pre>
+
+            <p>You also can&nbsp;use the One-Way communication with&nbsp;Sessionful service.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+
+<pre lang="cs">
+[ServiceContract(SessionMode = SessionMode.Required)]
+interface IMyContract
+{
+&nbsp;&nbsp;&nbsp; [OperationContract(IsOneWay = true)]
+&nbsp;&nbsp;&nbsp; void MyMethod();
+}</pre>
+
+            <ul>
+                <li><strong>Callback Service - </strong>Till now, we have seen that all cilents&nbsp; will call the service to get the things done. But WCF also provides the service to call the client. So​ we call it duplex transfer mode.</li>
+            </ul>
+
+            <h2>Callback Service​</h2>
+
+            <div>​&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Note</strong></div>
+
+            <ul>
+                <li>
+                    <div>HTTP protocols are connectionless nature, so it is not supported for callback operation. So <em>BasicHttpBinding </em>and <em>WSHttpBinding </em>cannot be used for callback service.</div>
+                </li>
+                <li>
+                    <div>WSDualHttpBinding is made for call back operation.</div>
+                </li>
+                <li>
+                    <div>All this bindings include TCP&nbsp;and IPC protocols support Duplex communication.</div>
+                </li>
+            </ul>
+
+            <h3><img alt="" src="http://wcftutorial.net/Images/140300_Callback.jpg" style="width: 685px; height: 343px; margin-right: 200px; margin-left: 200px;" /></h3>
+
+            <h3>step 1 : Defining a ServiceContract and it implement and Configuring a callback contract</h3>
+
+            <p>Callback service can be enabled by using <em>CallbackContract</em> property in the <em>ServiceContract</em> attribute. Let&#39;s implement a difficult demo.</p>
+
+<pre>
+&nbsp;</pre>
+
+            <div>//IDuplexService.cs</div>
+
+            <div>namespace WCFTrainning.DuplexStreamService</div>
+
+            <div>{</div>
+
+            <div>
+                <div>
+                    [ServiceContract(CallbackContract = typeof(IPushCallback))]<br />
+                    &nbsp;&nbsp;&nbsp; public interface IDuplexService<br />
+                    &nbsp;&nbsp;&nbsp; {
+                </div>
+
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //Duplex operation<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [OperationContract(IsOneWay = true)]<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void StartPushingData();
+                </div>
+
+                <div>&nbsp;</div>
+
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [OperationContract(IsOneWay = true)]<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void StopPushingData();
+                </div>
+
+                <div>&nbsp;</div>
+
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [OperationContract(IsOneWay = true)]<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void StartPushingStream();
+                </div>
+
+                <div>&nbsp;</div>
+
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [OperationContract(IsOneWay = true)]<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void StopPushingStream();
+                </div>
+
+                <div>&nbsp;</div>
+
+                <div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //Logging<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [OperationContract(IsOneWay = true)]<br />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void GetLog();<br />
+                    &nbsp;&nbsp;&nbsp; }
+                </div>
+
+                <div>}</div>
+            </div>
+
+            <p>Implement&nbsp; the operation in the service.</p>
+
+<pre>
+&nbsp;</pre>
+
+<pre>
+fd</pre>
+
+
+        </span>
+        <!-- End Article -->
+
+
+
+
+    </div>
+</body>
+</html>

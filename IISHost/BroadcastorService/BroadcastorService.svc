@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="IISHost.BroadcastorService.BroadcastorService" CodeBehind="BroadcastorService.svc.cs" %>
